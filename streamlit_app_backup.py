@@ -518,7 +518,7 @@ with col3:
         st.warning("🔕 Uyarılar kapatıldı!")
 
 # 💡 AI Destekli Öneri Sistemi 🤖
-st.markdown("""
+ai_suggestion_html = """
     <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
                 border-radius: 25px; padding: 30px; margin: 40px 0; 
                 box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
@@ -531,7 +531,8 @@ st.markdown("""
             🧠 AI destekli kişiselleştirilmiş öneriler alın!
         </p>
     </div>
-""", unsafe_allow_html=True)
+"""
+st.markdown(ai_suggestion_html, unsafe_allow_html=True)
 
 # Öneri kategorileri
 col1, col2, col3 = st.columns(3)
