@@ -5,12 +5,10 @@ import pickle
 import time
 import random
 
-# SDG logoları ve renkleri
 SDG3_LOGO = "https://sdgs.un.org/sites/default/files/goals/Goal-03.png"
 SDG11_LOGO = "https://sdgs.un.org/sites/default/files/goals/Goal-11.png"
 PRIMARY_COLOR = "#1e3a8a"
 
-# HTML Templates (ayrı değişkenler olarak)
 MAIN_HEADER_HTML = """
     <div style='text-align:center; margin:20px 0;'>
         <span style='font-size:60px; margin-bottom:10px; display:block;'>🌍🌱🏙️</span>
@@ -26,7 +24,7 @@ REGIONAL_HEADER_HTML = """
                 border-radius: 20px; padding: 25px; margin: 30px 0; 
                 box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);'>
         <h2 style='color: white; text-align: center; font-size: 2.5rem; 
-                   text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px;'>
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 20px;'>
             🗺️ Bölgesel Hava Kalitesi Keşfi 🔍
         </h2>
         <p style='color: rgba(255,255,255,0.9); text-align: center; font-size: 1.2rem; margin: 0;'>
@@ -41,7 +39,7 @@ USER_LOGIN_HTML = """
                 box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
                 border: 3px solid rgba(255,255,255,0.2);'>
         <h2 style='color: white; text-align: center; font-size: 2.8rem; 
-                   text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
             👤 Kullanıcı Merkezi 🎯
         </h2>
         <p style='color: rgba(255,255,255,0.9); text-align: center; font-size: 1.3rem; margin-bottom: 30px;'>
@@ -56,7 +54,7 @@ SUGGESTION_HEADER_HTML = """
                 box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
                 border: 3px solid rgba(255,255,255,0.2);'>
         <h2 style='color: white; text-align: center; font-size: 2.8rem; 
-                   text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
             🤖 Akıllı Öneri Merkezi 💡
         </h2>
         <p style='color: rgba(255,255,255,0.9); text-align: center; font-size: 1.3rem; margin-bottom: 30px;'>
@@ -71,12 +69,22 @@ REMINDER_HEADER_HTML = """
                 box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
                 border: 3px solid rgba(255,255,255,0.2);'>
         <h2 style='color: white; text-align: center; font-size: 2.8rem; 
-                   text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
+                    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 25px;'>
             ⏰ Akıllı Hatırlatıcı Merkezi 🔔
         </h2>
         <p style='color: rgba(255,255,255,0.9); text-align: center; font-size: 1.3rem; margin-bottom: 30px;'>
             📅 Kişiselleştirilmiş hatırlatıcılar oluşturun ve yönetin!
         </p>
+    </div>
+"""
+
+ALERT_SYSTEM_HTML = """
+    <div style='background: linear-gradient(45deg, #FF9A9E 0%, #FECFEF 50%, #FECFEF 100%); 
+                border-radius: 25px; padding: 30px; margin: 30px 0;
+                box-shadow: 0 12px 30px rgba(255, 154, 158, 0.4);'>
+        <h3 style='color: #333; text-align: center; font-size: 2.2rem; margin-bottom: 25px;'>
+            🔔 Akıllı Uyarı Sistemi 📱
+        </h3>
     </div>
 """
 
@@ -117,18 +125,9 @@ FOOTER_HTML = """
         </div>
     </div>
 """
-
-# Arayüz ayarları
-st.set_page_config(page_title="UDEP - AirSense", page_icon="🌍", layout="centered")
-
-# Logo ve ana başlık - ortalanmış
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.image("logo.jpg", width=200)
-    
-st.markdown(MAIN_HEADER_HTML, unsafe_allow_html=True)
-
-# Fonksiyonlar
+#---------------------------------------------------------------------------------------------------------------------------------------------
+# YARDIMCI FONKSİYONLAR
+#---------------------------------------------------------------------------------------------------------------------------------------------
 def box_choice(text, bg_url, link="#", overlay="rgba(30,58,138,0.55)", text_opacity=0.95, width=260, height=140):
     box_html = f"""
     <a href="{link}" target="_self">
@@ -175,7 +174,24 @@ def alert_box(text, overlay="rgba(30,58,138,0.55)", text_opacity=0.95, width=300
     """
     st.markdown(alert_html, unsafe_allow_html=True)
 
-# Ana kartlar
+#---------------------------------------------------------------------------------------------------------------------------------------------
+# ANA UYGULAMA YAPISI
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+# Arayüz ayarları
+st.set_page_config(page_title="UDEP - AirSense", page_icon="🌍", layout="centered")
+
+# Logo ve ana başlık - ortalanmış
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    try:
+        st.image("logo.jpg", width=200)
+    except FileNotFoundError:
+        st.warning("⚠️ 'logo.jpg' dosyası bulunamadı. Lütfen doğru dizinde olduğundan emin olun.")
+        
+st.markdown(MAIN_HEADER_HTML, unsafe_allow_html=True)
+
+## Canlı Hava Kalitesi Verisi (örnek)
 st.markdown('<div style="background:rgba(255,255,255,0.7); border-radius:12px; padding:8px 24px; margin:10px auto; width:fit-content;"><h3 style="color:#1e3a8a; margin:0; text-align:center;">📊 Canlı Hava Kalitesi Verisi</h3></div>', unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
@@ -194,7 +210,7 @@ with col2:
 with col3:
     info_box("Ozon: 120 µg/m³", "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", overlay="rgba(75, 0, 130, 0.7)")
 
-# Veri giriş formu
+## Veri Giriş Formu
 st.markdown('<div style="background:rgba(255,255,255,0.7); border-radius:12px; padding:8px 24px; margin:30px auto 10px; width:fit-content;"><h3 style="color:#1e3a8a; margin:0; text-align:center;">📝 Veri Giriş Merkezi</h3></div>', unsafe_allow_html=True)
 
 # Varsayılan değerler
@@ -216,26 +232,29 @@ with col2:
 st.markdown("---")
 st.subheader("Tahmin Aracı")
 
-# Tahmin aracı
+## Tahmin Aracı
 with st.container():
-    with open("dataset/logreg_model.pkl", "rb") as f:
-        model = pickle.load(f)
-    features = np.array([[temp, humidity, pm25, pm10, no2, so2, co, industrial]])
-    if st.button("Tahmin Et"):
-        prediction = model.predict(features)
-        air_quality_map = {0: "Hazardous", 1: "Poor", 2: "Moderate", 3: "Good"}
-        result = air_quality_map.get(int(prediction[0]), "Unknown")
-        st.markdown(f"<h2 style='text-align:center;color:{PRIMARY_COLOR};'>Tahmin: {result}</h2>", unsafe_allow_html=True)
-        if result == "Hazardous":
-            alert_box("⚠️ Sağlığınız için dışarı çıkmayın.", overlay="rgb(255,0,0)")
-        elif result == "Poor":
-            alert_box("🚨 Sağlığınız için dışarıda bulunmaktan kaçının.", overlay="rgb(255, 165, 0)")
-        elif result == "Moderate":
-            alert_box("✅ Dışarı çıkmanızda herhangi bir problem yok.", overlay="rgb(255, 255, 0, 1.0)")
-        else:
-            alert_box("✅ Hava kalitesi çok iyi, dışarı çıkabilirsiniz.", overlay="rgb(0, 128, 0)")
-
-# Bölgesel sistem
+    try:
+        with open("dataset/logreg_model.pkl", "rb") as f:
+            model = pickle.load(f)
+        features = np.array([[temp, humidity, pm25, pm10, no2, so2, co, industrial]])
+        if st.button("Tahmin Et"):
+            prediction = model.predict(features)
+            air_quality_map = {0: "Hazardous", 1: "Poor", 2: "Moderate", 3: "Good"}
+            result = air_quality_map.get(int(prediction[0]), "Unknown")
+            st.markdown(f"<h2 style='text-align:center;color:{PRIMARY_COLOR};'>Tahmin: {result}</h2>", unsafe_allow_html=True)
+            if result == "Hazardous":
+                alert_box("⚠️ Sağlığınız için dışarı çıkmayın.", overlay="rgb(255,0,0)")
+            elif result == "Poor":
+                alert_box("🚨 Sağlığınız için dışarıda bulunmaktan kaçının.", overlay="rgb(255, 165, 0)")
+            elif result == "Moderate":
+                alert_box("✅ Dışarı çıkmanızda herhangi bir problem yok.", overlay="rgb(255, 255, 0, 1.0)")
+            else:
+                alert_box("✅ Hava kalitesi çok iyi, dışarı çıkabilirsiniz.", overlay="rgb(0, 128, 0)")
+    except FileNotFoundError:
+        st.error("⚠️ Model dosyası 'dataset/logreg_model.pkl' bulunamadı. Lütfen dosya yolunu kontrol edin.")
+        
+## Bölgesel Sistem
 st.markdown(REGIONAL_HEADER_HTML, unsafe_allow_html=True)
 
 # Türkiye şehirleri (kısaltılmış liste)
@@ -256,7 +275,7 @@ with col2:
     else:
         st.selectbox("🏘️ İlçe Seçiniz", options=["Önce İl Seçiniz..."], disabled=True)
 
-# Kullanıcı sistemi
+## Kullanıcı Sistemi
 st.markdown(USER_LOGIN_HTML, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -275,17 +294,8 @@ with col2:
         else:
             st.warning("⚠️ Lütfen şehir seçin!")
 
-# Uyarı sistemi
-alert_system_html = """
-    <div style='background: linear-gradient(45deg, #FF9A9E 0%, #FECFEF 50%, #FECFEF 100%); 
-                border-radius: 25px; padding: 30px; margin: 30px 0;
-                box-shadow: 0 12px 30px rgba(255, 154, 158, 0.4);'>
-        <h3 style='color: #333; text-align: center; font-size: 2.2rem; margin-bottom: 25px;'>
-            🔔 Akıllı Uyarı Sistemi 📱
-        </h3>
-    </div>
-"""
-st.markdown(alert_system_html, unsafe_allow_html=True)
+## Uyarı Sistemi
+st.markdown(ALERT_SYSTEM_HTML, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -295,7 +305,7 @@ with col2:
 with col3:
     push_check = st.checkbox("🔔 Push Bildirimleri")
 
-# Öneri sistemi
+## Öneri Sistemi
 st.markdown(SUGGESTION_HEADER_HTML, unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns(3)
@@ -317,7 +327,7 @@ with col3:
         env_tip = random.choice(env_tips)
         st.success(f"🌍 **Çevre Tavsiyesi:** {env_tip}")
 
-# Hatırlatıcı sistemi
+## Hatırlatıcı Sistemi
 st.markdown(REMINDER_HEADER_HTML, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
@@ -335,5 +345,5 @@ if st.button("⚡ HATIRLATİCİ OLUŞTUR ⚡"):
     else:
         st.warning("⚠️ Lütfen hatırlatıcı mesajı yazın!")
 
-# Footer
+## Footer
 st.markdown(FOOTER_HTML, unsafe_allow_html=True)
