@@ -7,7 +7,7 @@ Air-Sense is a cutting-edge project designed to combat the critical issue of urb
 The core idea is to move from passive data monitoring to active, predictive insights, empowering individuals and urban authorities to make informed decisions for a healthier community.
 
 ## App
-👉🏻 [**Air-Sense: Urban Air Quality Prediction App**](https://airsense-urban-smart-air-quality-forecast-system-ev5rjkappmaux.streamlit.app/)
+👉🏻 [**Air-Sense: Urban Air Quality Prediction App**](https://gulcihanglmz-urban-air-quality-ozone-value-streamlit-app-nu3fsx.streamlit.app/)
 
 
 ## ✨ Features
